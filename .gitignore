@@ -1,0 +1,5 @@
+#ignoring IntelliJ files
+.idea
+
+#ignoring enviroment files
+.env
