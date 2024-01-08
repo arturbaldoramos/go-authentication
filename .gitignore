@@ -3,3 +3,6 @@
 
 #ignoring enviroment files
 .env
+
+#ignore auto generete folder
+bin
