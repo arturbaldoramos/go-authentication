@@ -2,21 +2,14 @@ package db
 
 import (
 	"fmt"
-	"github.com/arturbaldoramos/go-authentication/pkg/models"
-	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"log"
 	"os"
 )
 
-func ConnectDB() *gorm.DB {
+var DB *gorm.DB
 
-	//load environment variables
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+func ConnectDB() *gorm.DB {
 
 	username := os.Getenv("DB_USER")
 	password := os.Getenv("DB_PASSWORD")
@@ -32,12 +25,6 @@ func ConnectDB() *gorm.DB {
 		panic(err)
 	}
 
-	errMigrate := db.AutoMigrate(&models.User{})
-	if errMigrate != nil {
-		fmt.Println("Error executing migration")
-		panic(errMigrate)
-	}
-	fmt.Println("Successfully  connected...", db)
-
+	DB = db
 	return db
 }
