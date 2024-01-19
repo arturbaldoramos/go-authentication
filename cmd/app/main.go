@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/arturbaldoramos/go-authentication/pkg/models"
-	"github.com/arturbaldoramos/go-authentication/pkg/routes"
+	"github.com/arturbaldoramos/go-authentication/pkg/router"
 	"github.com/joho/godotenv"
 	"log"
 	"os"
