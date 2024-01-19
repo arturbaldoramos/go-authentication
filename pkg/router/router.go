@@ -1,27 +1,16 @@
 package router
 
 import (
-	"fmt"
-	"github.com/arturbaldoramos/go-authentication/pkg/models"
-	"github.com/gorilla/mux"
-	"net/http"
+	"github.com/gofiber/fiber/v2"
+	"log"
 	"os"
 )
 
 func Initialize() {
-	router := mux.NewRouter()
+	router := fiber.New()
 
-	router.HandleFunc("/user", func(w http.ResponseWriter, r *http.Request) {
-		vars := mux.Vars(r)
-		uuid := vars["uuid"]
-		user := models.GetUser(uuid)
-		fmt.Println(user)
-	}).Methods("GET")
+	initializeRoutes(router)
 
-	err := http.ListenAndServe(os.Getenv("API_PORT"), router)
-	if err != nil {
-		fmt.Println("Error serving API")
-		panic(err)
-	}
+	log.Fatal(router.Listen(os.Getenv("API_PORT")))
 
 }
