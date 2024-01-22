@@ -10,7 +10,5 @@ func Initialize() {
 	router := fiber.New()
 
 	initializeRoutes(router)
-
 	log.Fatal(router.Listen(os.Getenv("API_PORT")))
-
 }

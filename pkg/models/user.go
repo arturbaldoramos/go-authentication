@@ -55,8 +55,12 @@ func (user *User) Create() map[string]interface{} {
 }
 
 func GetUser(uuid string) *User {
+	if uuid == "" {
+		return nil
+	}
+
 	user := &User{}
-	err := database.DB.First(&user, uuid).Error
+	err := database.DB.Where("id = ?", uuid).First(&user).Error
 	if err != nil {
 		fmt.Println(err)
 		return nil
