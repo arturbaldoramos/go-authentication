@@ -24,33 +24,53 @@ type User struct {
 
 func (user *User) Validate() (map[string]interface{}, bool) {
 	if user.Name == "" {
-		return u.Message(false, "Name should be on the payload"), false
+		return u.Message(false, "Name shouldn't be empty"), false
 	}
 	if user.Email == "" {
-		return u.Message(false, "Email should be on the payload"), false
+		return u.Message(false, "Email shouldn't be empty"), false
 	}
 	if user.Password == "" {
-		return u.Message(false, "Password should be on the payload"), false
+		return u.Message(false, "Password shouldn't be empty"), false
 	}
 
 	return u.Message(true, "success"), true
 }
 
 func (user *User) Create() map[string]interface{} {
+
+	//Verify body arguments
 	if resp, ok := user.Validate(); !ok {
 		return resp
 	}
 
+	//Check if email already exist on database
+	if err := database.DB.Where("email = ?", user.Email).First(&User{}).Error; err == nil {
+		return u.Message(false, "Email already exists")
+	}
+
+	//Encrypt password
 	hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
 	if err != nil {
 		u.Message(false, "Internal server error")
 		return nil
 	}
-
 	user.Password = string(hash)
+
+	//Save user to the database
 	database.DB.Create(user)
+
+	//Create a new interface, so we don't return sensitivity information
+	userResponse := map[string]interface{}{
+		"id":        user.ID,
+		"name":      user.Name,
+		"email":     user.Email,
+		"CreatedAt": user.CreatedAt,
+		"UpdatedAt": user.UpdatedAt,
+	}
+
+	//Formatting response
 	resp := u.Message(true, "success")
-	resp["user"] = user
+	resp["user"] = userResponse
 	return resp
 }
 
