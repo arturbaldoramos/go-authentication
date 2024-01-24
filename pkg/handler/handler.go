@@ -8,8 +8,8 @@ import (
 )
 
 func GetUserById(ctx *fiber.Ctx) error {
-	uuid := ctx.Query("uuid")
-	user := models.GetUser(uuid)
+	uuid := ctx.Params("uuid")
+	user := models.GetUserByID(uuid)
 
 	if user != nil {
 		resp := u.Message(true, "success")

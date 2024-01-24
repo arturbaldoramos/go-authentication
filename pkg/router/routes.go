@@ -6,6 +6,6 @@ import (
 )
 
 func initializeRoutes(router *fiber.App) {
-	router.Get("/user", handler.GetUserById)
+	router.Get("/user/:uuid", handler.GetUserById)
 	router.Post("/user", handler.CreateUser)
 }
