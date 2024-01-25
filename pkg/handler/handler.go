@@ -39,3 +39,9 @@ func CreateUser(ctx *fiber.Ctx) error {
 	return ctx.JSON(createdUser)
 
 }
+
+func GetAllUsers(ctx *fiber.Ctx) error {
+	users := models.GetAllUsers()
+
+	return ctx.JSON(users)
+}

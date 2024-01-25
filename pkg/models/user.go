@@ -7,7 +7,7 @@ import (
 	"time"
 
 	database "github.com/arturbaldoramos/go-authentication/pkg/db"
-	u "github.com/arturbaldoramos/go-authentication/pkg/utils"
+	"github.com/arturbaldoramos/go-authentication/pkg/utils"
 )
 
 type User struct {
@@ -22,18 +22,26 @@ type User struct {
 	DeletedAt gorm.DeletedAt
 }
 
+type userResponse struct {
+	ID        string `gorm:"type:uuid;default:gen_random_uuid()" json:"id"`
+	Name      string `gorm:"not null;type:varchar(150)" json:"name"`
+	Email     string `gorm:"unique;not null;type:varchar(100);default:null" json:"email"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+}
+
 func (user *User) Validate() (map[string]interface{}, bool) {
 	if user.Name == "" {
-		return u.Message(false, "Name shouldn't be empty"), false
+		return utils.Message(false, "Name shouldn't be empty"), false
 	}
 	if user.Email == "" {
-		return u.Message(false, "Email shouldn't be empty"), false
+		return utils.Message(false, "Email shouldn't be empty"), false
 	}
 	if user.Password == "" {
-		return u.Message(false, "Password shouldn't be empty"), false
+		return utils.Message(false, "Password shouldn't be empty"), false
 	}
 
-	return u.Message(true, "success"), true
+	return utils.Message(true, "success"), true
 }
 
 func (user *User) Create() map[string]interface{} {
@@ -45,13 +53,13 @@ func (user *User) Create() map[string]interface{} {
 
 	//Check if email already exist on database
 	if err := database.DB.Where("email = ?", user.Email).First(&User{}).Error; err == nil {
-		return u.Message(false, "Email already exists")
+		return utils.Message(false, "Email already exists")
 	}
 
 	//Encrypt password
 	hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
 	if err != nil {
-		u.Message(false, "Internal server error")
+		utils.Message(false, "Internal server error")
 		return nil
 	}
 	user.Password = string(hash)
@@ -69,12 +77,12 @@ func (user *User) Create() map[string]interface{} {
 	}
 
 	//Formatting response
-	resp := u.Message(true, "success")
+	resp := utils.Message(true, "success")
 	resp["user"] = userResponse
 	return resp
 }
 
-func GetUser(uuid string) *User {
+func GetUserByID(uuid string) *User {
 	if uuid == "" {
 		return nil
 	}
@@ -87,4 +95,24 @@ func GetUser(uuid string) *User {
 	}
 
 	return user
+}
+
+func GetAllUsers() map[string]interface{} {
+	var users []*User
+	database.DB.Find(&users)
+
+	var simplifiedUsers []userResponse
+	for _, u := range users {
+		simplifiedUsers = append(simplifiedUsers, userResponse{
+			ID:        u.ID,
+			Name:      u.Name,
+			Email:     u.Email,
+			CreatedAt: u.CreatedAt,
+			UpdatedAt: u.UpdatedAt,
+		})
+	}
+
+	resp := utils.Message(true, "success")
+	resp["users"] = simplifiedUsers
+	return resp
 }
