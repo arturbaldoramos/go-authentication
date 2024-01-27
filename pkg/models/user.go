@@ -51,8 +51,8 @@ func (user *User) Create() map[string]interface{} {
 		return resp
 	}
 
-	//Check if email already exist on database
-	if err := database.DB.Where("email = ?", user.Email).First(&User{}).Error; err == nil {
+	//Check if email already exist on database, even if user was deleted
+	if err := database.DB.Unscoped().Where("email = ?", user.Email).First(&User{}).Error; err == nil {
 		return utils.Message(false, "Email already exists")
 	}
 
@@ -116,4 +116,26 @@ func GetAllUsers() map[string]interface{} {
 	resp := utils.Message(true, "Success")
 	resp["users"] = simplifiedUsers
 	return resp
+}
+
+func DeleteUserById(uuid string) map[string]interface{} {
+	user := GetUserByID(uuid)
+
+	if user != nil {
+		if err := database.DB.Delete(&user).Error; err != nil {
+			return utils.Message(false, "Error deleting user")
+		}
+
+		resp := utils.Message(true, "Success")
+		resp["user"] = &userResponse{
+			ID:        user.ID,
+			Name:      user.Name,
+			Email:     user.Email,
+			CreatedAt: user.CreatedAt,
+			UpdatedAt: user.UpdatedAt,
+		}
+		return resp
+	}
+
+	return utils.Message(false, "User not exist")
 }

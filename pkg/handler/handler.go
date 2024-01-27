@@ -45,3 +45,9 @@ func GetAllUsers(ctx *fiber.Ctx) error {
 
 	return ctx.JSON(users)
 }
+
+func DeleteUserById(ctx *fiber.Ctx) error {
+	uuid := ctx.Params("uuid")
+
+	return ctx.JSON(models.DeleteUserById(uuid))
+}
