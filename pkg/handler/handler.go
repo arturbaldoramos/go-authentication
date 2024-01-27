@@ -12,7 +12,7 @@ func GetUserById(ctx *fiber.Ctx) error {
 	user := models.GetUserByID(uuid)
 
 	if user != nil {
-		resp := u.Message(true, "success")
+		resp := u.Message(true, "Success")
 
 		userWithoutPassword := map[string]interface{}{
 			"id":        user.ID,
@@ -25,7 +25,7 @@ func GetUserById(ctx *fiber.Ctx) error {
 		resp["user"] = userWithoutPassword
 		return ctx.JSON(resp)
 	}
-	return ctx.JSON(u.Message(false, "user not found"))
+	return ctx.JSON(u.Message(false, "User not found"))
 }
 
 func CreateUser(ctx *fiber.Ctx) error {

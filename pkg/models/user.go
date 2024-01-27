@@ -41,7 +41,7 @@ func (user *User) Validate() (map[string]interface{}, bool) {
 		return utils.Message(false, "Password shouldn't be empty"), false
 	}
 
-	return utils.Message(true, "success"), true
+	return utils.Message(true, "Success"), true
 }
 
 func (user *User) Create() map[string]interface{} {
@@ -65,20 +65,19 @@ func (user *User) Create() map[string]interface{} {
 	user.Password = string(hash)
 
 	//Save user to the database
-	database.DB.Create(user)
-
-	//Create a new interface, so we don't return sensitivity information
-	userResponse := map[string]interface{}{
-		"id":        user.ID,
-		"name":      user.Name,
-		"email":     user.Email,
-		"CreatedAt": user.CreatedAt,
-		"UpdatedAt": user.UpdatedAt,
+	if err := database.DB.Create(user); err != nil {
+		return utils.Message(false, "Error saving user")
 	}
 
 	//Formatting response
-	resp := utils.Message(true, "success")
-	resp["user"] = userResponse
+	resp := utils.Message(true, "Success")
+	resp["user"] = &userResponse{
+		ID:        user.ID,
+		Name:      user.Name,
+		Email:     user.Email,
+		CreatedAt: user.CreatedAt,
+		UpdatedAt: user.UpdatedAt,
+	}
 	return resp
 }
 
@@ -99,7 +98,9 @@ func GetUserByID(uuid string) *User {
 
 func GetAllUsers() map[string]interface{} {
 	var users []*User
-	database.DB.Find(&users)
+	if err := database.DB.Find(&users).Error; err != nil {
+		return utils.Message(false, "Error retrieving all users")
+	}
 
 	var simplifiedUsers []userResponse
 	for _, u := range users {
@@ -112,7 +113,7 @@ func GetAllUsers() map[string]interface{} {
 		})
 	}
 
-	resp := utils.Message(true, "success")
+	resp := utils.Message(true, "Success")
 	resp["users"] = simplifiedUsers
 	return resp
 }
