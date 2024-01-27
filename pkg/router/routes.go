@@ -10,4 +10,7 @@ func initializeRoutes(router *fiber.App) {
 	router.Delete("/user/:uuid", handler.DeleteUserById)
 	router.Get("/user", handler.GetAllUsers)
 	router.Post("/user", handler.CreateUser)
+
+	router.Post("/login", handler.Login)
+	router.Post("/logout", handler.Logout)
 }

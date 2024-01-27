@@ -2,8 +2,11 @@ package models
 
 import (
 	"fmt"
+	"github.com/golang-jwt/jwt"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
+	"os"
+	"strconv"
 	"time"
 
 	database "github.com/arturbaldoramos/go-authentication/pkg/db"
@@ -28,6 +31,11 @@ type userResponse struct {
 	Email     string `gorm:"unique;not null;type:varchar(100);default:null" json:"email"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
+}
+
+type UserLogin struct {
+	Email    string `gorm:"unique;not null;type:varchar(100);default:null" json:"email"`
+	Password string `gorm:"not null" json:"password"`
 }
 
 func (user *User) Validate() (map[string]interface{}, bool) {
@@ -65,7 +73,7 @@ func (user *User) Create() map[string]interface{} {
 	user.Password = string(hash)
 
 	//Save user to the database
-	if err := database.DB.Create(user); err != nil {
+	if err := database.DB.Create(user); err == nil {
 		return utils.Message(false, "Error saving user")
 	}
 
@@ -88,6 +96,21 @@ func GetUserByID(uuid string) *User {
 
 	user := &User{}
 	err := database.DB.Where("id = ?", uuid).First(&user).Error
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+
+	return user
+}
+
+func GetUserByEmail(email string) *User {
+	if email == "" {
+		return nil
+	}
+
+	user := &User{}
+	err := database.DB.Where("email = ?", email).First(&user).Error
 	if err != nil {
 		fmt.Println(err)
 		return nil
@@ -138,4 +161,39 @@ func DeleteUserById(uuid string) map[string]interface{} {
 	}
 
 	return utils.Message(false, "User not exist")
+}
+
+func Login(login *UserLogin) (resp map[string]interface{}, token string) {
+	// Get user info
+	user := GetUserByEmail(login.Email)
+
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(login.Password)); err == nil {
+
+		// Create JWT token
+		token := jwt.New(jwt.SigningMethodHS256)
+
+		// Some conversions
+		expTimeString := os.Getenv("JWT_EXPIRATION")
+		expTime, err := strconv.ParseInt(expTimeString, 10, 64)
+		expDuration := time.Duration(expTime)
+
+		// Add info inside token
+		claims := token.Claims.(jwt.MapClaims)
+		claims["username"] = user.Name
+		claims["email"] = user.Email
+		claims["exp"] = time.Now().Add(time.Hour * expDuration).Unix()
+
+		// Sign the token with the secret key
+		jwtSecret := []byte(os.Getenv("JWT_SECRET"))
+		tokenString, err := token.SignedString(jwtSecret)
+		if err != nil {
+			return utils.Message(false, "Failed to generate token"), ""
+		}
+
+		// Formatting response
+		resp := utils.Message(true, "Success login in")
+		return resp, tokenString
+	}
+
+	return utils.Message(false, "Username or Password invalid"), ""
 }
