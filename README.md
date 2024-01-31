@@ -19,11 +19,16 @@ Authentication API using Golang, created with the aim of studying and practicing
 
 ## Roadmap
 
-- Implement route to edit user information
+- PATCH route to edit user information
 
-- Implement automated tests
+- Implement tests
 
 - Implement front-end view using [HTMX](https://htmx.org/)
+
+- 2FA
+
+- Bruteforce login timeout
+
 ## Environment variables
 
 To run this project, you will need to rename the .env.example file to .env, or create your own with the following variables.
