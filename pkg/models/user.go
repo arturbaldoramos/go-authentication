@@ -7,6 +7,7 @@ import (
 	"gorm.io/gorm"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	database "github.com/arturbaldoramos/go-authentication/pkg/db"
@@ -71,6 +72,9 @@ func (user *User) Create() map[string]interface{} {
 		return nil
 	}
 	user.Password = string(hash)
+
+	//Lower case email
+	user.Email = strings.ToLower(user.Email)
 
 	//Save user to the database
 	if err := database.DB.Create(user); err == nil {
