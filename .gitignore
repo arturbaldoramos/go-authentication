@@ -9,3 +9,6 @@ bin
 
 #ignore air error folder
 tmp
+
+#ignore node modules files
+node_modules
