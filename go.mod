@@ -12,6 +12,7 @@ require (
 )
 
 require (
+	github.com/a-h/templ v0.2.543 // indirect
 	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/google/uuid v1.5.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
