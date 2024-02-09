@@ -18,5 +18,9 @@ func initializeRoutes(router *fiber.App) {
 
 	router.Post("/login", handler.Login)
 	router.Post("/logout", handler.Logout)
+
 	router.Static("/css", "/pkg/static/output.css")
+	router.Static("/htmx", "/pkg/static/htmx.min.js")
+
+	router.Use(handler.NotFoundPage)
 }
