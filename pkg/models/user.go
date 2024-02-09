@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"github.com/golang-jwt/jwt"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
@@ -94,30 +93,29 @@ func (user *User) Create() map[string]interface{} {
 }
 
 func GetUserByID(uuid string) *User {
+	user := &User{}
 	if uuid == "" {
-		return nil
+		return user
 	}
 
-	user := &User{}
 	err := database.DB.Where("id = ?", uuid).First(&user).Error
 	if err != nil {
-		fmt.Println(err)
-		return nil
+		return user
 	}
 
 	return user
 }
 
 func GetUserByEmail(email string) *User {
+	user := &User{}
+
 	if email == "" {
-		return nil
+		return user
 	}
 
-	user := &User{}
 	err := database.DB.Where("email = ?", email).First(&user).Error
 	if err != nil {
-		fmt.Println(err)
-		return nil
+		return user
 	}
 
 	return user
