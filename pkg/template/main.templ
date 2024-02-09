@@ -1,0 +1,17 @@
+package template
+
+templ MainPage(){
+   <!DOCTYPE html>
+    <html lang="en" class="h-full">
+        <head>
+        <title>Main</title>
+        <link href="/css" rel="stylesheet"/>
+        <script src="/htmx"></script>
+        </head>
+
+        <body class="h-full">
+            <p> main page </p>
+            <button hx-post="logout">logout</button>
+        </body>
+    </html>
+}
