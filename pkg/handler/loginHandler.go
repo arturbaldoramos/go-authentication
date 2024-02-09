@@ -24,7 +24,14 @@ func Login(ctx *fiber.Ctx) error {
 		})
 	}
 
-	return ctx.JSON(resp)
+	message := resp["message"].(string)
+	if message == "Success login in" {
+		notificationComponent := template.LoginNotification(message, "text-green-600")
+		return utils.Render(ctx, notificationComponent)
+	}
+	notificationComponent := template.LoginNotification(message, "text-orange-600")
+	return utils.Render(ctx, notificationComponent)
+
 }
 
 func Logout(ctx *fiber.Ctx) error {
