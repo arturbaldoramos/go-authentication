@@ -24,12 +24,12 @@ func Login(ctx *fiber.Ctx) error {
 		})
 	}
 
+	//TODO melhorar o jeito que checa se o usuário foi logado, não simplesmente lendo o message
 	message := resp["message"].(string)
 	if message == "Success login in" {
-		notificationComponent := template.LoginNotification(message, "text-green-600")
-		return utils.Render(ctx, notificationComponent)
+		ctx.Set("X-Login-Success", "true")
 	}
-	notificationComponent := template.LoginNotification(message, "text-orange-600")
+	notificationComponent := template.LoginNotification(message)
 	return utils.Render(ctx, notificationComponent)
 
 }
