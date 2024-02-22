@@ -9,6 +9,8 @@ import (
 )
 
 func Login(ctx *fiber.Ctx) error {
+	//TODO checar se o usuário já está logado
+
 	login := new(models.UserLogin)
 
 	if err := ctx.BodyParser(login); err != nil {
