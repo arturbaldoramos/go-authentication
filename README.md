@@ -80,6 +80,12 @@ if you don't have them, follow the link to their installation:
   npm install
 ```
 
+#### Generate css styles
+
+```bash
+  npx tailwindcss -o ./pkg/static/output.css
+```
+
 
 #### Run docker compose
 
@@ -106,15 +112,6 @@ Install [Templ](https://templ.guide/) - model files in pkg/template
 Run command to build template
 ```bash
   templ generate
-```
-
----
-
-#### Need to update tailwind styles?
-Run the following command
-
-```bash
-  npx tailwindcss -o ./pkg/static/output.css
 ```
 
 ---
