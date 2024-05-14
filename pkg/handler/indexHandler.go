@@ -11,6 +11,11 @@ func MainPage(ctx *fiber.Ctx) error {
 	return utils.Render(ctx, mainPageComponent)
 }
 
+func DashboardPage(ctx *fiber.Ctx) error {
+	dashboardPageComponent := template.DashboardPage()
+	return utils.Render(ctx, dashboardPageComponent)
+}
+
 func NotFoundPage(ctx *fiber.Ctx) error {
 	notFoundComponent := template.NotFoundPage(
 		"Something's missing.",

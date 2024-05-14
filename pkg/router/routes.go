@@ -8,7 +8,7 @@ import (
 
 func initializeRoutes(router *fiber.App) {
 	router.Get("/", handler.MainPage)
-	router.Get("/dashboard", middleware.AuthMiddleware, handler.MainPage)
+	router.Get("/dashboard", middleware.AuthMiddleware, handler.DashboardPage)
 	router.Get("/user", middleware.AuthMiddleware, handler.GetAllUsers)
 	router.Get("/user/:uuid", middleware.AuthMiddleware, handler.GetUserById)
 	router.Delete("/user/:uuid", middleware.AuthMiddleware, handler.DeleteUserById)
