@@ -3,9 +3,12 @@
 
 Authentication API using Golang, created with the aim of studying and practicing the language and frameworks.
 
+## Peek
+![Peek](/pkg/utils/peek.png "Peek")
 
 ## Features
 
+- SSR with templates and htmx
 - Login system using JWT and Cookies
 - Protected Routes
 - User CRUD
@@ -14,16 +17,13 @@ Authentication API using Golang, created with the aim of studying and practicing
 
 ## Stack used
 
-**Back-end:** Golang, Go-fiber, Gorm, Golang-jwt and Postgres
+**Back-end:** Golang, Go-fiber, Gorm.
+
+**Front-end:** Templ, HTMX, Flowbite and Tailwind.
+
+**Database:** Postgres
 
 
-## Roadmap
-
-- Implement route to edit user information
-
-- Implement automated tests
-
-- Implement front-end view using [HTMX](https://htmx.org/)
 ## Environment variables
 
 To run this project, you will need to rename the .env.example file to .env, or create your own with the following variables.
@@ -50,18 +50,15 @@ To run this project, you will need to rename the .env.example file to .env, or c
 ## Running locally
 
 #### Required
-Firstly you need to make sure that Golang and Docker are installed on your machine,
+Firstly you need to make sure that Golang, Docker and NPM are installed on your machine,
 if you don't have them, follow the link to their installation:
 
 [Golang](https://go.dev/doc/install)
 
 [Docker](https://www.docker.com/)
 
-And you should use some client to test the routes, you can try [Postman](https://www.postman.com/downloads/)
+[NPM](https://www.npmjs.com/)
 
-#### Optional
-
-You can download   [Make](https://gnuwin32.sourceforge.net/packages/make.htm) to         easily   run project commands
 
 ----
 #### Clone the project
@@ -73,14 +70,16 @@ You can download   [Make](https://gnuwin32.sourceforge.net/packages/make.htm) to
 #### Enter project directory
 
 ```bash
-  cd my-project
+  cd go-authentication
 ```
 
 #### Install dependencies
 
 ```bash
   go mod tidy
+  npm install
 ```
+
 
 #### Run docker compose
 
@@ -88,29 +87,40 @@ You can download   [Make](https://gnuwin32.sourceforge.net/packages/make.htm) to
   docker-compose up -d
 ```
 
-#### Start application
 
+## Useful information
+
+#### Hot-reload to develop?
+Install [AIR](https://github.com/cosmtrek/air) - config file already on the project
+
+Run command:
 ```bash
-  go run ./cmd/app/main.go
+  air
 ```
 
-## Other commands
+---
 
-#### Stop docker compose
+#### Want to create new templates and use them?
+Install [Templ](https://templ.guide/) - model files in pkg/template
+
+Run command to build template
 ```bash
-  docker-compose stop
+  templ generate
 ```
 
-#### Build application
+---
+
+#### Need to update tailwind styles?
+Run the following command
+
 ```bash
-  go build -o bin/go-authentication.exe ./cmd/app/main.go
+  npx tailwindcss -o ./pkg/static/output.css
 ```
 
-#### Clean build files
-```bash
-  go clean
-  rmdir /s /q bin
-```
+---
+#### Want to update htmx version?
+Go to their [Website](https://htmx.org/docs/#installing) and look to download a copy. Replace the file inside `/pkg/static/htmx.min.js`, please keep the same filename. 
+
 ## API documentation
 
 #### Login user
