@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"github.com/arturbaldoramos/go-authentication/pkg/template"
 	"github.com/arturbaldoramos/go-authentication/pkg/utils"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt"
@@ -10,7 +11,11 @@ import (
 func AuthMiddleware(c *fiber.Ctx) error {
 	tokenString := c.Cookies("token")
 	if tokenString == "" {
-		return c.Status(fiber.StatusUnauthorized).JSON(utils.Message(false, "Missing authentication token"))
+		component := template.ErrorPage(
+			"Unauthorized",
+			"You must log in to access this page",
+			"401")
+		return utils.Render(c, component)
 	}
 
 	// Parse JWT token

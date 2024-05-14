@@ -1,11 +1,10 @@
 package handler
 
 import (
-	"github.com/gofiber/fiber/v2"
-	"time"
-
 	"github.com/arturbaldoramos/go-authentication/pkg/models"
-	u "github.com/arturbaldoramos/go-authentication/pkg/utils"
+	"github.com/arturbaldoramos/go-authentication/pkg/template"
+	utils "github.com/arturbaldoramos/go-authentication/pkg/utils"
+	"github.com/gofiber/fiber/v2"
 )
 
 func GetUserById(ctx *fiber.Ctx) error {
@@ -13,7 +12,7 @@ func GetUserById(ctx *fiber.Ctx) error {
 	user := models.GetUserByID(uuid)
 
 	if user != nil {
-		resp := u.Message(true, "Success")
+		resp := utils.Message(true, "Success")
 
 		userWithoutPassword := map[string]interface{}{
 			"id":        user.ID,
@@ -26,7 +25,7 @@ func GetUserById(ctx *fiber.Ctx) error {
 		resp["user"] = userWithoutPassword
 		return ctx.JSON(resp)
 	}
-	return ctx.JSON(u.Message(false, "User not found"))
+	return ctx.JSON(utils.Message(false, "User not found"))
 }
 
 func CreateUser(ctx *fiber.Ctx) error {
@@ -36,7 +35,13 @@ func CreateUser(ctx *fiber.Ctx) error {
 		return err
 	}
 
-	return ctx.JSON(user.Create())
+	resp := user.Create()
+	message := resp["message"].(string)
+	if message == "Success" {
+		return Login(ctx)
+	}
+	notificationComponent := template.LoginNotification(message)
+	return utils.Render(ctx, notificationComponent)
 }
 
 func GetAllUsers(ctx *fiber.Ctx) error {
@@ -49,34 +54,4 @@ func DeleteUserById(ctx *fiber.Ctx) error {
 	uuid := ctx.Params("uuid")
 
 	return ctx.JSON(models.DeleteUserById(uuid))
-}
-
-func Login(ctx *fiber.Ctx) error {
-	login := new(models.UserLogin)
-
-	if err := ctx.BodyParser(login); err != nil {
-		return err
-	}
-
-	resp, token := models.Login(login)
-
-	if token != "" {
-		ctx.Cookie(&fiber.Cookie{
-			Name:  "token",
-			Value: token,
-		})
-	}
-
-	return ctx.JSON(resp)
-}
-
-func Logout(ctx *fiber.Ctx) error {
-
-	ctx.Cookie(&fiber.Cookie{
-		Name:    "token",
-		Value:   "",
-		Expires: time.Unix(0, 0),
-	})
-
-	return ctx.JSON(u.Message(true, "Logout successfully"))
 }
