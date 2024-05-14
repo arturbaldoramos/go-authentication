@@ -8,16 +8,20 @@ import (
 
 func initializeRoutes(router *fiber.App) {
 	router.Get("/", handler.MainPage)
-	router.Get("/dashboard", middleware.AuthMiddleware, handler.DashboardPage)
+	router.Get("/dashboard", handler.DashboardPage)
+	router.Get("/marketplace", handler.MarketplacePage)
+	router.Get("/features", handler.FeaturesPage)
+	router.Get("/team", handler.TeamPage)
+	router.Get("/contact", handler.ContactPage)
+
 	router.Get("/user", middleware.AuthMiddleware, handler.GetAllUsers)
 	router.Get("/user/:uuid", middleware.AuthMiddleware, handler.GetUserById)
 	router.Delete("/user/:uuid", middleware.AuthMiddleware, handler.DeleteUserById)
 	router.Post("/user", handler.CreateUser)
 
 	router.Get("/login", handler.LoginPage)
-	router.Get("/register", handler.RegisterPage)
-
 	router.Post("/login", handler.Login)
+	router.Get("/register", handler.RegisterPage)
 	router.Post("/logout", handler.Logout)
 
 	router.Static("/css", "./pkg/static/output.css")

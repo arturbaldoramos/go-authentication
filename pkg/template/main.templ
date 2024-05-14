@@ -32,19 +32,19 @@ templ MainPage(){
                                 <a href="/" class="block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white" aria-current="page">Home</a>
                             </li>
                             <li>
-                                <a href="#" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Company</a>
+                                <a href="/dashboard" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Dashboard</a>
                             </li>
                             <li>
-                                <a href="#" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Marketplace</a>
+                                <a href="/marketplace" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Marketplace</a>
                             </li>
                             <li>
-                                <a href="#" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Features</a>
+                                <a href="/features" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Features</a>
                             </li>
                             <li>
-                                <a href="#" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Team</a>
+                                <a href="/team" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Team</a>
                             </li>
                             <li>
-                                <a href="#" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
+                                <a href="/contact" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
                             </li>
                         </ul>
                     </div>
@@ -52,30 +52,118 @@ templ MainPage(){
             </nav>
         </header>
 
-        <body class="h-full">
-            <p> main page </p>
-            <button hx-post="logout">logout</button>
-        </body>
+        <button hx-post="logout">debug:logout</button>
+
     </html>
+
 }
 
 templ DashboardPage(){
    <!DOCTYPE html>
     <html lang="en" class="h-full">
         <head>
-        <title>Main</title>
-        <link href="/css" rel="stylesheet"/>
-        <script src="/htmx"></script>
-        <script src="./go-authentication/node_modules/flowbite/dist/flowbite.min.js"></script>
+            <title>Dashboard</title>
+            <link href="/css" rel="stylesheet"/>
         </head>
 
-        <header>
+        <body class="h-full">
+            <section class=" flex justify-center items-center h-full bg-white dark:bg-gray-900">
+                <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+                    <div class="mx-auto max-w-screen-sm text-center">
+                        <p class="mb-4 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark:text-white">Page under development</p>
+                        <p class="mb-4 text-lg font-light text-gray-500 dark:text-gray-400">We're currently working hard to bring you the latest updates and information. Please bear with us as we finalize the content for this page. In the meantime, feel free to explore other sections of our website. Thank you for your patience!</p>
+                        <a href="/" class="inline-flex text-white bg-primary-600 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-primary-900 my-4">Back to Homepage</a>
+                    </div>
+                </div>
+            </section>
+        </body>
+    </html>
+}
 
-        </header>
+templ MarketplacePage(){
+   <!DOCTYPE html>
+    <html lang="en" class="h-full">
+        <head>
+            <title>Marketplace</title>
+            <link href="/css" rel="stylesheet"/>
+        </head>
 
         <body class="h-full">
-            <p> dashboard page </p>
-            <button hx-post="logout">logout</button>
+            <section class=" flex justify-center items-center h-full bg-white dark:bg-gray-900">
+                <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+                    <div class="mx-auto max-w-screen-sm text-center">
+                        <p class="mb-4 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark:text-white">Page under development</p>
+                        <p class="mb-4 text-lg font-light text-gray-500 dark:text-gray-400">We're currently working hard to bring you the latest updates and information. Please bear with us as we finalize the content for this page. In the meantime, feel free to explore other sections of our website. Thank you for your patience!</p>
+                        <a href="/" class="inline-flex text-white bg-primary-600 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-primary-900 my-4">Back to Homepage</a>
+                    </div>
+                </div>
+            </section>
+        </body>
+    </html>
+}
+
+templ FeaturesPage(){
+   <!DOCTYPE html>
+    <html lang="en" class="h-full">
+        <head>
+            <title>Features</title>
+            <link href="/css" rel="stylesheet"/>
+        </head>
+
+        <body class="h-full">
+            <section class=" flex justify-center items-center h-full bg-white dark:bg-gray-900">
+                <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+                    <div class="mx-auto max-w-screen-sm text-center">
+                        <p class="mb-4 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark:text-white">Page under development</p>
+                        <p class="mb-4 text-lg font-light text-gray-500 dark:text-gray-400">We're currently working hard to bring you the latest updates and information. Please bear with us as we finalize the content for this page. In the meantime, feel free to explore other sections of our website. Thank you for your patience!</p>
+                        <a href="/" class="inline-flex text-white bg-primary-600 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-primary-900 my-4">Back to Homepage</a>
+                    </div>
+                </div>
+            </section>
+        </body>
+    </html>
+}
+
+templ TeamPage(){
+   <!DOCTYPE html>
+    <html lang="en" class="h-full">
+        <head>
+            <title>Team</title>
+            <link href="/css" rel="stylesheet"/>
+        </head>
+
+        <body class="h-full">
+            <section class=" flex justify-center items-center h-full bg-white dark:bg-gray-900">
+                <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+                    <div class="mx-auto max-w-screen-sm text-center">
+                        <p class="mb-4 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark:text-white">Page under development</p>
+                        <p class="mb-4 text-lg font-light text-gray-500 dark:text-gray-400">We're currently working hard to bring you the latest updates and information. Please bear with us as we finalize the content for this page. In the meantime, feel free to explore other sections of our website. Thank you for your patience!</p>
+                        <a href="/" class="inline-flex text-white bg-primary-600 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-primary-900 my-4">Back to Homepage</a>
+                    </div>
+                </div>
+            </section>
+        </body>
+    </html>
+}
+
+templ ContactPage(){
+   <!DOCTYPE html>
+    <html lang="en" class="h-full">
+        <head>
+            <title>Contact</title>
+            <link href="/css" rel="stylesheet"/>
+        </head>
+
+        <body class="h-full">
+            <section class=" flex justify-center items-center h-full bg-white dark:bg-gray-900">
+                <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+                    <div class="mx-auto max-w-screen-sm text-center">
+                        <p class="mb-4 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark:text-white">Page under development</p>
+                        <p class="mb-4 text-lg font-light text-gray-500 dark:text-gray-400">We're currently working hard to bring you the latest updates and information. Please bear with us as we finalize the content for this page. In the meantime, feel free to explore other sections of our website. Thank you for your patience!</p>
+                        <a href="/" class="inline-flex text-white bg-primary-600 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-primary-900 my-4">Back to Homepage</a>
+                    </div>
+                </div>
+            </section>
         </body>
     </html>
 }
