@@ -14,6 +14,7 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   go-authentication:
+    image: go-authentication
     build: .
     ports:
       - "8080:8080"
