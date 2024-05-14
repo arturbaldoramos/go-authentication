@@ -1,11 +1,5 @@
 # Start by using the official Golang image as base
-FROM golang:latest
-
-# Set necessary environment variables
-ENV GO111MODULE=on \
-    CGO_ENABLED=0 \
-    GOOS=linux \
-    GOARCH=amd64
+FROM golang:alpine
 
 # Set the working directory inside the container
 WORKDIR /go-authentication
